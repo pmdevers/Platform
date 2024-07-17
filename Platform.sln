@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{F2AC1449
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{8C16EE0B-4C30-48EB-B6A6-9001D53F090C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{C78969A1-2A69-45D0-BC28-40565302ED3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "src\Common\Common.csproj", "{C78969A1-2A69-45D0-BC28-40565302ED3D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{58CC4557-4185-4DD4-9040-772CC00F1518}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,13 +20,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{58CC4557
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceGenerators", "tools\SourceGenerators\SourceGenerators.csproj", "{C5CDBD47-99DE-4CCD-BBA0-597A78884638}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SourceGenerators", "tools\SourceGenerators\SourceGenerators.csproj", "{C5CDBD47-99DE-4CCD-BBA0-597A78884638}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{DDEC6388-D5F3-4B2F-93C3-5E95E632C9F0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin", "src\Admin\Admin.csproj", "{5DC14B37-8C7E-4ED7-AC3E-4E8BBEB72BFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Tests", "test\Admin.Tests\Admin.Tests.csproj", "{F182BCC4-E4D2-449F-99FC-19D8DC78D5A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Tests", "test\Admin.Tests\Admin.Tests.csproj", "{F182BCC4-E4D2-449F-99FC-19D8DC78D5A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{4AAA8902-0D59-4AC1-B8B8-2EEF4353B1BC}"
 	ProjectSection(SolutionItems) = preProject
@@ -34,11 +34,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{4AAA8902
 		test\Directory.Packages.props = test\Directory.Packages.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Core\Core.csproj", "{D35F0B3B-3D01-4483-89E9-842B9FB66B58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Core\Core.csproj", "{D35F0B3B-3D01-4483-89E9-842B9FB66B58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "test\Core.Tests\Core.Tests.csproj", "{342078C6-404B-4B9B-A2AC-AF9957D93AB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests", "test\Core.Tests\Core.Tests.csproj", "{342078C6-404B-4B9B-A2AC-AF9957D93AB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tests", "test\Common.Tests\Common.Tests.csproj", "{1F07B6DD-0680-491A-B488-69E9C81637BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests", "test\Common.Tests\Common.Tests.csproj", "{1F07B6DD-0680-491A-B488-69E9C81637BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hypotheek", "src\Hypotheek\Hypotheek.csproj", "{8FF67625-2F7C-438D-86AC-9097EDDAFFDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +76,10 @@ Global
 		{1F07B6DD-0680-491A-B488-69E9C81637BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F07B6DD-0680-491A-B488-69E9C81637BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F07B6DD-0680-491A-B488-69E9C81637BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FF67625-2F7C-438D-86AC-9097EDDAFFDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF67625-2F7C-438D-86AC-9097EDDAFFDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF67625-2F7C-438D-86AC-9097EDDAFFDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF67625-2F7C-438D-86AC-9097EDDAFFDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{D35F0B3B-3D01-4483-89E9-842B9FB66B58} = {6AD47F7C-DAD2-46BE-B1E5-23FD188B7B4C}
 		{342078C6-404B-4B9B-A2AC-AF9957D93AB9} = {74839808-1497-4278-9C6C-6FE742DA0180}
 		{1F07B6DD-0680-491A-B488-69E9C81637BB} = {74839808-1497-4278-9C6C-6FE742DA0180}
+		{8FF67625-2F7C-438D-86AC-9097EDDAFFDF} = {6AD47F7C-DAD2-46BE-B1E5-23FD188B7B4C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C95BB690-2D25-4A31-93D7-554ACA6FAE2B}

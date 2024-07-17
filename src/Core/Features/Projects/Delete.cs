@@ -13,7 +13,7 @@ public static class Delete
 
     private static async Task<Results<Ok, BadRequest>> HandleAsync(
         [AsParameters] ProjectsServices services,
-        [FromHeader(Name = SubscriptionId.HeaderName)] SubscriptionId subscriptionId,
+        [FromHeader(Name = Headers.SubscriptionHeader)] SubscriptionId subscriptionId,
         [FromRoute] ProjectId id
         )
     {

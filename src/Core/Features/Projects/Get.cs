@@ -12,7 +12,7 @@ public static class Get
 
     private static async Task<Results<Ok<GetProjectResponse>, BadRequest, NotFound>> HandleAsync(
         [AsParameters] ProjectsServices services,
-        [FromHeader(Name = SubscriptionId.HeaderName)] SubscriptionId subscriptionId,
+        [FromHeader(Name = Headers.SubscriptionHeader)] SubscriptionId subscriptionId,
         [FromRoute] ProjectId projectId
         )
     {

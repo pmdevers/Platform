@@ -1,5 +1,4 @@
 ﻿using FinSecure.Platform.Common.Storage;
-using FinSecure.Platform.Common.ValueObjects;
 using FinSecure.Platform.Core.Domain.Projects;
 
 namespace FinSecure.Platform.Core.Features.Projects;

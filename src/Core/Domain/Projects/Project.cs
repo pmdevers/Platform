@@ -24,7 +24,7 @@ public class Project : AggregateRoot<ProjectId>
 
     public void Delete()
     {
-        RecordEvent(new ProjectDeleted(Id));
+        RecordEvent(new ProjectDeleted(Id, true));
     }
 
     internal void Apply(ProjectCreated e) 
@@ -35,6 +35,6 @@ public class Project : AggregateRoot<ProjectId>
 
     internal void Apply(ProjectDeleted e)
     {
-        IsDeleted = true;
+        IsDeleted = e.Deleted;
     }
 }
