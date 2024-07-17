@@ -1,0 +1,24 @@
+﻿<!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath> -->
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <CompanyName>FinSecure</CompanyName>
+    <ProjectName>Platform</ProjectName>
+    <!-- Redefine MSBuild Properties -->
+    <Company>$(CompanyName)</Company>
+    <RootNamespace>$(CompanyName).$(ProjectName).$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+	<ItemGroup Condition="'$(RootNamespace)' != 'FinSecure.Platform.SourceGenerators'" >
+	    <Using Include="Featurize" />
+		<Using Include="Featurize.DomainModel" />
+		<Using Include="Featurize.Repositories"/>
+		<Using Include="FinSecure.Platform.Common" />
+		<Using Include="FinSecure.Platform.Common.ValueObjects"/>
+	</ItemGroup>
+</Project>
