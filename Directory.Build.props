@@ -18,6 +18,7 @@
 	    <Using Include="Featurize" />
 		<Using Include="Featurize.DomainModel" />
 		<Using Include="Featurize.Repositories"/>
+		<Using Include="Featurize.ValueObjects.Identifiers.Behaviours"/>
 		<Using Include="FinSecure.Platform.Common" />
 		<Using Include="FinSecure.Platform.Common.ValueObjects"/>
 	</ItemGroup>

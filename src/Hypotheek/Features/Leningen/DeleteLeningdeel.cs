@@ -1,4 +1,5 @@
 ﻿
+using Featurize.ValueObjects;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ public static class DeleteLeningdeel
         [FromBody] DeleteLeningdeelRequest request
         )
     {
-        if(leningId.IsEmpty() || leningId == LeningId.Unknown)
+        if(leningId.IsEmptyOrUnknown())
         {
             return TypedResults.BadRequest();
         }

@@ -37,7 +37,7 @@ public class Lening : AggregateRoot<LeningId>
         RecordEvent(new LineairLeningdeelToegevoegd(Id, LeningdeelId.Next(), startDatum, looptijd, renteVastePeriode, hoofdsom));
     }
 
-    internal void DeleteLeningdeel(InkomenId leningdeelId)
+    internal void DeleteLeningdeel(LeningdeelId leningdeelId)
     {
         RecordEvent(new LeningdeelVerwijdert(Id, leningdeelId));
     }

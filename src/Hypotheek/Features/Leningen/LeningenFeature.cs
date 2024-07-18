@@ -21,5 +21,6 @@ public class LeningenFeature : IUseFeature,
         group.MapGetLening();
         group.MapAddLeningdeel();
         group.MapDeleteLeningdeel();
+        group.MapGetLeningdeelTermijnen();
     }
 }

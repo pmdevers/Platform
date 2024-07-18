@@ -1,4 +1,5 @@
 ﻿
+using Featurize.ValueObjects;
 using FinSecure.Platform.Core.Domain.Projects;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ public static class Create
         [FromBody] CreateProjectRequest request
         )
     {
-        if (subscriptionId.IsEmpty() || subscriptionId == SubscriptionId.Unknown)
+        if (subscriptionId.IsEmptyOrUnknown())
         {
             return TypedResults.BadRequest();
         }

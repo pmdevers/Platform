@@ -1,4 +1,5 @@
 ﻿
+using Featurize.ValueObjects;
 using FinSecure.Platform.Hypotheek.Domain.Leningen;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ public static class CreateLening
         [FromBody] CreateLeningRequest request
         )
     {
-        if(request.LeningId.IsEmpty() || request.LeningId == LeningId.Unknown)
+        if(request.LeningId.IsEmptyOrUnknown())
         {
             return TypedResults.BadRequest();
         }

@@ -15,7 +15,7 @@ public class AggregateManager<TAggregate, TId>(IEntityRepository<PersistendEvent
     public async Task<TAggregate?> LoadAsync(TId id)
     {
         var events = await _repository.Query
-            .Where(x => x.AggregateId.Equals(id))
+            .Where(x => x.AggregateId.Equals(id) && x.AggregateName == typeof(TAggregate).Name)
             .OrderBy(x => x.Version)
             .Select(x => AggregateManager<TAggregate, TId>.GetEvent(x))
             .ToArrayAsync();

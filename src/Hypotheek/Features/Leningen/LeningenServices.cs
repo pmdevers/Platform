@@ -5,5 +5,5 @@ namespace FinSecure.Platform.Hypotheek.Features.Leningen;
 
 public class LeningenServices(AggregateManager<Lening, LeningId> manager)
 {
-    public AggregateManager<Lening, InkomenId> Manager { get; } = manager;
+    public AggregateManager<Lening, LeningId> Manager { get; } = manager;
 }
