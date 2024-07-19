@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6AD47F7C-DAD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{74839808-1497-4278-9C6C-6FE742DA0180}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{F2AC1449-82C3-4559-AD8D-7871C77998A7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{8C16EE0B-4C30-48EB-B6A6-9001D53F090C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "src\Common\Common.csproj", "{C78969A1-2A69-45D0-BC28-40565302ED3D}"
@@ -42,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests", "test\Common
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hypotheek", "src\Hypotheek\Hypotheek.csproj", "{8FF67625-2F7C-438D-86AC-9097EDDAFFDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hypotheek.Tests", "test\Hypotheek.Tests\Hypotheek.Tests.csproj", "{B0DD36B3-EBF6-4CDB-887C-A7017DD80AE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hypotheek.Tests", "test\Hypotheek.Tests\Hypotheek.Tests.csproj", "{B0DD36B3-EBF6-4CDB-887C-A7017DD80AE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
