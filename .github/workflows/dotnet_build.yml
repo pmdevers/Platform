@@ -67,6 +67,11 @@ jobs:
         - name: Docker Push
           run: docker push ${{ env.docker-versioned }}
 
+        - name: Change image tag
+          run: docker tag ${{ env.docker-versioned }} ${{ env.docker-image }}:latest
+        
+        - name: change image tag
+          run: docker push ${{ env.docker-image }}:latest
     deploy:
         runs-on: ubuntu-latest
         needs: build
@@ -77,3 +82,5 @@ jobs:
               run: docker pull ${{ env.docker-versioned }}
             - name: change image tag
               run: docker tag ${{ env.docker-versioned }} ${{ env.docker-image }}:testing
+            - name: change image tag
+              run: docker push ${{ env.docker-image }}:testing
