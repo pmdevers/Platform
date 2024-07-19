@@ -40,7 +40,7 @@ public class PercentageTests
         var result = promile.ToString();
 
         // Assert
-        result.Should().Be("0,500%");
+        result.Should().Be("5,00%");
     }
 
     [Fact]
