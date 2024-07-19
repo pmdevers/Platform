@@ -20,13 +20,13 @@ jobs:
             dotnet-version: ${{ inputs.dotnet-version }}
         
         - name: DotNet Restore
-          run: dotnet restore .\src\${{ inputs.project }}
+          run: dotnet restore ./src/${{ inputs.project }}
         
         - name: DotNet Build
-          run: dotnet build .\src\${{ inputs.project }} --no-restore --configuration Release --verbosity minimal 
+          run: dotnet build ./src/${{ inputs.project }} --no-restore --configuration Release --verbosity minimal 
         
         - name: DotNet Tests
-          run: dotnet test .\test\${{ inputs.project }}.Tests --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger trx --results-directory coverage
+          run: dotnet test ./test/${{ inputs.project }}.Tests --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger trx --results-directory coverage
         
         - name: Code Coverage Summary Report
           uses: irongut/CodeCoverageSummary@v1.3.0
