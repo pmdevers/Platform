@@ -10,3 +10,6 @@ jobs:
         with:
             dotnet-version: '8.0'
             project: Hypotheek
+        secrets:
+            DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+            DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
