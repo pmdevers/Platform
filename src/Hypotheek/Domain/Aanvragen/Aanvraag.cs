@@ -7,7 +7,7 @@ public class Aanvraag : AggregateRoot<AanvraagId>
 {
     private readonly List<Aanvrager> _aanvragers = [];
 
-    public IReadOnlyList<Aanvrager> aanvragers => _aanvragers.AsReadOnly();
+    public IReadOnlyList<Aanvrager> Aanvragers => _aanvragers.AsReadOnly();
     public LeningId LeningId { get; private set; } = LeningId.Empty;
     public OnderpandId OnderpandId { get; private set; } = OnderpandId.Empty;
     public string Opmerking { get; private set; } = string.Empty;
