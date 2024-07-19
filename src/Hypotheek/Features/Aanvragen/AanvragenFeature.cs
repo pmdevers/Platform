@@ -16,6 +16,8 @@ public class AanvragenFeature : IUseFeature,
         var group = app.MapGroup("/v1/aanvragen")
             .WithTags("Aanvragen");
 
+        group.MapGetAanvraag();
         group.MapCreateAanvraag();
+        group.MapAddAanvrager();
     }
 }

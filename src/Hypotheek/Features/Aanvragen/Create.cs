@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FinSecure.Platform.Hypotheek.Features.Aanvragen;
 
-public static class CreateAanvraag
+public static class Create
 {
     public static void MapCreateAanvraag(this IEndpointRouteBuilder builder)
     {

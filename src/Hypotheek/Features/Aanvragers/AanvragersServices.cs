@@ -2,15 +2,13 @@
 using FinSecure.Platform.Hypotheek.Domain.Aanvragen;
 using FinSecure.Platform.Hypotheek.Domain.Aanvragers;
 
-namespace FinSecure.Platform.Hypotheek.Features.Aanvragen;
+namespace FinSecure.Platform.Hypotheek.Features.Aanvragers;
 
-public class AanvragenServices(
-    AggregateManager<Aanvraag, AanvraagId> manager,
+public class AanvragersServices(
     AggregateManager<NatuurlijkPersoon, AanvragerId> natuurlijkPersoonManager,
     AggregateManager<Rechtspersoon, AanvragerId> rechtspersoonManager
     )
 {
-    public AggregateManager<Aanvraag, AanvraagId> Manager { get; } = manager;
     public AggregateManager<NatuurlijkPersoon, AanvragerId> NatuurlijkPersoonManager { get; } = natuurlijkPersoonManager;
     public AggregateManager<Rechtspersoon, AanvragerId> RechtspersoonManager { get; } = rechtspersoonManager;
 }
