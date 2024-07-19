@@ -30,12 +30,7 @@ jobs:
           run: dotnet build ./src/${{ inputs.project }} --no-restore --configuration Release --verbosity minimal 
         
         - name: DotNet Tests
-          if: !inputs.run-coverage
-          run: dotnet test ./test/${{ inputs.project }}.Tests --no-build --verbosity normal
-        
-        - name: DotNet Tests with coverage
-          if: inputs.run-coverage
-          run: dotnet test ./test/${{ inputs.project }}.Tests --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger trx --results-directory coverage
+          run: dotnet test ./test/${{ inputs.project }}.Tests --no-build --verbosity normal --logger trx --results-directory coverage
         
         - name: Code Coverage Summary Report
           if: inputs.run-coverage
