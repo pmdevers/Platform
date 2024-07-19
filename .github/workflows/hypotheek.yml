@@ -10,4 +10,3 @@ jobs:
         with:
             dotnet-version: '8.0'
             project: Hypotheek
-            run-coverage: true
