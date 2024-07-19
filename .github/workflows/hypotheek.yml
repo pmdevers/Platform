@@ -9,3 +9,4 @@ jobs:
         uses: ./.github/workflows/dotnet_build.yml
         with:
             dotnet-version: '8.0'
+            project: Hypotheek
