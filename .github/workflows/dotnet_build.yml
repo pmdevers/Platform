@@ -16,6 +16,9 @@ jobs:
     dotnet_build:
         runs-on: ubuntu-latest
         environment: production
+        permissions:
+            pull-requests: write
+            contents: read
         steps:
         - uses: actions/checkout@v4
         
