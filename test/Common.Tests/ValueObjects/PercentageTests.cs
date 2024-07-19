@@ -14,40 +14,53 @@ public class PercentageTests
         var result = Percentage.Create(value);
 
         // Assert
-        result.Should().Be(Percentage.Create(0.5m));
+        result.Should().Be(Percentage.Parse("50%"));
     }
 
     [Fact]
     public void Percentage_ToString_Should_Return_Correct_String()
     {
         // Arrange
-        var percentage = Percentage.Create(0.5m);
+        var percentage = Percentage.Create(50m);
 
         // Act
         var result = percentage.ToString();
 
         // Assert
-        result.Should().Be("50%");
+        result.Should().Be("50,0%");
+    }
+
+    [Fact]
+    public void Percentage_From_Promile()
+    {
+        // Arrange
+        var promile = Percentage.Parse("50‰");
+
+        // Act
+        var result = promile.ToString();
+
+        // Assert
+        result.Should().Be("0,500%");
     }
 
     [Fact]
     public void Percentage_Parse_Should_Return_Correct_Percentage()
     {
         // Arrange
-        string value = "50%";
+        var value = "50%";
 
         // Act
         var result = Percentage.Parse(value);
 
         // Assert
-        result.Should().Be(Percentage.Create(0.5m));
+        result.Should().Be(Percentage.Create(50));
     }
 
     [Fact]
     public void Percentage_TryParse_Should_Return_True_And_Correct_Percentage()
     {
         // Arrange
-        string value = "50%";
+        var value = "50%";
         bool parseResult;
 
         // Act
@@ -55,14 +68,14 @@ public class PercentageTests
 
         // Assert
         parseResult.Should().BeTrue();
-        result.Should().Be(Percentage.Create(0.5m));
+        result.Should().Be(Percentage.Create(50));
     }
 
     [Fact]
     public void Percentage_TryParse_Should_Return_False_For_Invalid_Input()
     {
         // Arrange
-        string value = "invalid";
+        var value = "invalid";
 
         // Act
         var parseResult = Percentage.TryParse(value, out var result);
@@ -76,23 +89,23 @@ public class PercentageTests
     public void Percentage_Implicit_Operator_Should_Create_Percentage_From_Decimal()
     {
         // Arrange
-        decimal value = 0.5m;
+        var value = 0.5m;
 
         // Act
         Percentage result = value;
 
         // Assert
-        result.Should().Be(0.5m);
+        result.Should().Be(Percentage.Create(0.5m));
     }
 
     [Fact]
     public void Percentage_Explicit_Operator_Should_Return_Decimal_Value()
     {
         // Arrange
-        var percentage = Percentage.Create(0.5m);
+        var percentage = Percentage.Create(50);
 
         // Act
-        decimal result = (decimal)percentage;
+        var result = (decimal)percentage;
 
         // Assert
         result.Should().Be(0.5m);
@@ -102,36 +115,36 @@ public class PercentageTests
     public void Percentage_Addition_Operator_Should_Add_Two_Percentages()
     {
         // Arrange
-        var percentage1 = Percentage.Create(0.3m);
-        var percentage2 = Percentage.Create(0.2m);
+        var percentage1 = Percentage.Create(3);
+        var percentage2 = Percentage.Create(2);
 
         // Act
         var result = percentage1 + percentage2;
 
         // Assert
-        result.Should().Be(Percentage.Create(0.5m));
+        result.Should().Be(Percentage.Create(5));
     }
 
     [Fact]
     public void Percentage_Subtraction_Operator_Should_Subtract_Two_Percentages()
     {
         // Arrange
-        var percentage1 = Percentage.Create(0.5m);
-        var percentage2 = Percentage.Create(0.2m);
+        var percentage1 = Percentage.Create(5);
+        var percentage2 = Percentage.Create(2);
 
         // Act
         var result = percentage1 - percentage2;
 
         // Assert
-        result.Should().Be(Percentage.Create(0.3m));
+        result.Should().Be(Percentage.Create(3));
     }
 
     [Fact]
     public void Percentage_Multiplication_Operator_Should_Multiply_Two_Percentages()
     {
         // Arrange
-        var percentage1 = Percentage.Create(0.5m);
-        var percentage2 = Percentage.Create(0.2m);
+        var percentage1 = Percentage.Create(5);
+        var percentage2 = Percentage.Create(2);
 
         // Act
         var result = percentage1 * percentage2;
@@ -144,11 +157,10 @@ public class PercentageTests
     public void Percentage_Division_Operator_Should_Divide_Two_Percentages()
     {
         // Arrange
-        var percentage1 = Percentage.Create(0.5m);
-        var percentage2 = Percentage.Create(0.2m);
+        var percentage1 = Percentage.Create(5);
 
         // Act
-        var result = percentage1 / percentage2;
+        var result = percentage1 / 2;
 
         // Assert
         result.Should().Be(Percentage.Create(2.5m));
