@@ -30,7 +30,7 @@ jobs:
           run: dotnet build ./src/${{ inputs.project }} --no-restore --configuration Release --verbosity minimal 
         
         - name: DotNet Tests
-          run: dotnet test ./test/${{ inputs.project }}.Tests --no-build --verbosity normal --logger trx --results-directory coverage
+          run: dotnet test ./test/${{ inputs.project }}.Tests
         
         - name: Code Coverage Summary Report
           if: inputs.run-coverage
