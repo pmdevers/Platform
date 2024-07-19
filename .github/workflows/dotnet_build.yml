@@ -39,7 +39,7 @@ jobs:
           run: dotnet build ./src/${{ inputs.project }} --no-restore --configuration Release --verbosity minimal 
         
         - name: Run unit tests
-          run: dotnet test ./test/${{ inputs.project }} --logger trx --results-directory coverage --verbosity minimal 
+          run: dotnet test ./test/${{ inputs.project }}.Tests --logger trx --results-directory coverage --verbosity minimal 
 
         - name: Upload unit test results
           uses: actions/upload-artifact@v4
@@ -50,7 +50,7 @@ jobs:
           if: ${{ always() }}
         
         - name: Create Docker Image
-          run: dotnet publish ./test/${{ inputs.project }} --os linux --arch x64 /t:PublishContainer
+          run: dotnet publish ./src/${{ inputs.project }} --os linux --arch x64 /t:PublishContainer
     
         - name: Change image tag
           run: docker tag ${{ inputs.project }} ${{ env.docker-image }}
