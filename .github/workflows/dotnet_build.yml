@@ -7,6 +7,9 @@ on:
             project:
                 required: true
                 type: string
+            image:
+                required: true
+                type: string
         secrets:
             DOCKER_HUB_USERNAME:
                 required: true
@@ -14,7 +17,7 @@ on:
                 required: true
 
 env:
-    docker-image: '${{ secrets.DOCKER_HUB_USERNAME }}/${{inputs.project}}'
+    docker-image: '${{ secrets.DOCKER_HUB_USERNAME }}/${{inputs.image}}'
 
 jobs:
     build:
