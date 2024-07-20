@@ -1,9 +1,11 @@
 ﻿namespace FinSecure.Platform.Hypotheek.Domain.Leningen.Events;
 
-public record LeningdeelCreated(
+
+public record LineairLeningdeelToegevoegd(
+    LeningId LeningId,
     LeningdeelId LeningdeelId,
-    DateOnly IngangsDatum,
+    DateOnly StartDatum,
     int Looptijd,
     RenteVastePeriode RenteVastePeriode,
-    decimal Hoofdsom
+    Amount Hoofdsom
     ) : EventRecord;

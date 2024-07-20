@@ -1,0 +1,86 @@
+@Hypotheek_HostAddress = http://localhost:5165
+
+POST {{Hypotheek_HostAddress}}/v1/aanvragen/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "aanvraagId": "{{$guid}}"
+}
+
+###
+
+POST {{Hypotheek_HostAddress}}/v1/leningen/
+Content-Type: application/json
+
+{
+  "leningId": "18cd4c92-8ea2-48c4-b782-e64e0af3e731"
+}
+
+###
+
+GET {{Hypotheek_HostAddress}}/v1/leningen/18cd4c92-8ea2-48c4-b782-e64e0af3e731
+Accept: application/json
+
+###
+
+POST {{Hypotheek_HostAddress}}/v1/leningen/18cd4c92-8ea2-48c4-b782-e64e0af3e731/aflossingsvrij
+Content-Type: application/json
+
+{
+  "startDatum": "2024-07-19",
+  "looptijd": 360,
+  "renteVastePeriode": {
+    "rente": "4,5%",
+    "looptijd": 120
+  },
+  "hoofdsom": "200000",
+  "extraMaandelijkseAflossing": "200"
+}
+
+###
+
+
+POST {{Hypotheek_HostAddress}}/v1/leningen/18cd4c92-8ea2-48c4-b782-e64e0af3e731/annuitair
+Content-Type: application/json
+
+{
+  "startDatum": "2024-07-19",
+  "looptijd": 360,
+  "renteVastePeriode": {
+    "rente": "4,5%",
+    "looptijd": 120
+  },
+  "hoofdsom": "200000"
+}
+
+###
+
+POST {{Hypotheek_HostAddress}}/v1/leningen/18cd4c92-8ea2-48c4-b782-e64e0af3e731/lineair
+Content-Type: application/json
+
+{
+  "startDatum": "2024-07-19",
+  "looptijd": 360,
+  "renteVastePeriode": {
+    "rente": "4,5%",
+    "looptijd": 120
+  },
+  "hoofdsom": "200000"
+}
+
+###
+
+DELETE {{Hypotheek_HostAddress}}/v1/leningen/18cd4c92-8ea2-48c4-b782-e64e0af3e731/leningdeel
+Content-Type: application/json
+
+{
+  "leningdeelId": "adc5b08f-b0d4-46a9-bbf4-864e84d2f553"
+}
+
+###
+
+GET {{Hypotheek_HostAddress}}/v1/leningen/18cd4c92-8ea2-48c4-b782-e64e0af3e731/termijnen/ae581ff2-9ff4-48bd-9de3-a1ae22a0cbca
+Accepts: application/json
+
+###

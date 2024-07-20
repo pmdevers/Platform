@@ -1,5 +1,4 @@
-﻿
-namespace FinSecure.Platform.Hypotheek.Domain.Inkomen;
+﻿namespace FinSecure.Platform.Hypotheek.Domain.Inkomens;
 
 public class Inkomen : AggregateRoot<InkomenId>
 {

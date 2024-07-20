@@ -2,6 +2,7 @@
 
 public sealed class Annuitair : IAflosvorm
 {
+    public string Naam => nameof(Annuitair);
     public Percentage Boetevrij
         => Percentage.Create(10);
 

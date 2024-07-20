@@ -1,0 +1,16 @@
+name: Hypotheek Service
+
+on:
+    pull_request:
+        branches:
+            - main
+jobs:
+    Build:
+        uses: ./.github/workflows/dotnet_build.yml
+        with:
+            dotnet-version: '8.0'
+            project: Hypotheek
+            image: hypotheek
+        secrets:
+            DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+            DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
