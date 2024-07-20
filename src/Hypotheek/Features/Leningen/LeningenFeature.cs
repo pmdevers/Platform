@@ -17,6 +17,10 @@ public class LeningenFeature : IUseFeature,
         var group = app.MapGroup("/v1/leningen")
             .WithTags("Leningen");
 
-        group.MapGet("/", () => "Hello World!");
+        group.MapCreateLening();
+        group.MapGetLening();
+        group.MapAddLeningdeel();
+        group.MapDeleteLeningdeel();
+        group.MapGetLeningdeelTermijnen();
     }
 }

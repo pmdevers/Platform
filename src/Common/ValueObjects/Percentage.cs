@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text.Json.Serialization;
 using System.ComponentModel;
 using System.Numerics;
+using System.Globalization;
 
 namespace FinSecure.Platform.Common.ValueObjects;
 
@@ -116,26 +117,28 @@ public partial record struct Percentage :
 
 internal static class PercentageParser
 {
-
-    public const int TO_PERCENT = 100;
-    public const int TO_PROMILE = 1000;
+    private const int PROCENT_FACTOR = 100;
+    private const int PROMILE_FACTOR = 1000;
 
     public static string ToString(decimal? value)
     {
-        return (value ?? 0) * TO_PERCENT + "%";
+        var culture = new CultureInfo("nl-NL");
+        return ((value ?? 0) * PROCENT_FACTOR).ToString(culture) + "%";
     }
 
     public static bool TryParse(string s, out decimal result)
     {
+        result = 0;
         var value = Normalize(s);
 
-        if (decimal.TryParse(value, out result))
+        if (decimal.TryParse(value, out var tmp))
         {
-            result /= TO_PERCENT;
+
+            result = tmp / PROCENT_FACTOR;
 
             if (s.Contains('‰'))
             {
-                result /= TO_PERCENT;
+                result = tmp / PROMILE_FACTOR;
             }
 
             return true;

@@ -1,4 +1,5 @@
 ﻿
+using Featurize.ValueObjects;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ public static class Delete
         [FromRoute] ProjectId id
         )
     {
-        if(subscriptionId == SubscriptionId.Empty || subscriptionId == SubscriptionId.Unknown)
+        if(subscriptionId.IsEmptyOrUnknown())
         {
             return TypedResults.BadRequest();
         }

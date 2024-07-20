@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Featurize.ValueObjects;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinSecure.Platform.Core.Features.Projects;
@@ -16,7 +17,7 @@ public static class Get
         [FromRoute] ProjectId projectId
         )
     {
-        if (subscriptionId == SubscriptionId.Empty || subscriptionId == SubscriptionId.Unknown)
+        if (subscriptionId.IsEmptyOrUnknown())
         {
             return TypedResults.BadRequest();
         }

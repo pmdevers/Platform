@@ -5,4 +5,12 @@
     <ProjectReference Include="..\..\src\Common\Common.csproj" />
   </ItemGroup>
 
+  
+  <ItemGroup>
+    <PackageReference Update="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>

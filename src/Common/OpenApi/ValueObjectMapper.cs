@@ -17,11 +17,22 @@ public static class ValueObjectMapper
 
         foreach (var type in types)
         {
-            options.MapType(type, () => new OpenApiSchema()
+            if (!type.ContainsGenericParameters)
+            { 
+                options.MapType(type, () => new OpenApiSchema()
+                {
+                    Type = "string",
+                    Example = new OpenApiString(type.GetDefaultValue().ToString() ?? string.Empty)
+                });
+            } else
             {
-                Type = "string",
-                Example = new OpenApiString(type.GetDefaultValue().ToString() ?? string.Empty)
-            });
+
+                options.MapType(type, () => new OpenApiSchema()
+                {
+                    Type = "string",
+                    Example = new OpenApiString(string.Empty)
+                });
+            }
         }
 
     }

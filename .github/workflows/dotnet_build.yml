@@ -1,0 +1,91 @@
+on:
+    workflow_call:
+        inputs:
+            dotnet-version: 
+                required: true
+                type: string
+            project:
+                required: true
+                type: string
+            image:
+                required: true
+                type: string
+        secrets:
+            DOCKER_HUB_USERNAME:
+                required: true
+            DOCKER_HUB_PASSWORD:
+                required: true
+
+env:
+    docker-image: '${{ secrets.DOCKER_HUB_USERNAME }}/${{inputs.image}}'
+    docker-versioned: '${{ secrets.DOCKER_HUB_USERNAME }}/${{inputs.image}}:${{ github.sha }}'
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        
+        permissions:
+            pull-requests: write
+            contents: read
+        steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        
+        - name: Setup dotnet ${{ inputs.dotnet-version }}
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: ${{ inputs.dotnet-version }}
+        
+        - name: Run restore
+          run: dotnet restore ./src/${{ inputs.project }}
+        
+        - name: Run build
+          run: dotnet build ./src/${{ inputs.project }} --no-restore --configuration Release --verbosity minimal 
+        
+        - name: Run unit tests
+          run: dotnet test ./test/${{ inputs.project }}.Tests --logger trx --results-directory coverage --verbosity minimal 
+
+        - name: Upload unit test results
+          uses: actions/upload-artifact@v4
+          with:
+            name: dotnet-results
+            path: coverage
+          # Use always() to always run this step to publish test results when there are test failures
+          if: ${{ always() }}
+        
+        - name: Create Docker Image
+          run: dotnet publish ./src/${{ inputs.project }} --os linux --arch x64 /t:PublishContainer
+    
+        - name: Change image tag
+          run: docker tag ${{ inputs.image }} ${{ env.docker-versioned }}
+
+        - name: Login to Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKER_HUB_USERNAME }}
+            password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+        - name: Docker Push
+          run: docker push ${{ env.docker-versioned }}
+
+        - name: Change image tag
+          run: docker tag ${{ env.docker-versioned }} ${{ env.docker-image }}:latest
+        
+        - name: change image tag
+          run: docker push ${{ env.docker-image }}:latest
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        environment:
+            name: Testing
+        steps:
+            - name: Login to Docker Hub
+              uses: docker/login-action@v3
+              with:
+                username: ${{ secrets.DOCKER_HUB_USERNAME }}
+                password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+            - name: Deploy to Testing
+              run: docker pull ${{ env.docker-versioned }}
+            - name: change image tag
+              run: docker tag ${{ env.docker-versioned }} ${{ env.docker-image }}:testing
+            - name: change image tag
+              run: docker push ${{ env.docker-image }}:testing
