@@ -28,6 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SonarAnalyzer.CSharp" PrivateAssets="all" />
-	<ProjectReference Include="..\Common\Common.csproj" Condition="('$(RootNamespace)' != 'FinSecure.Platform.Common' and '$(RootNamespace)' != 'FinSecure.Platform.SourceGenerators')" />
+    <ProjectReference Include="..\Common\Common.csproj" Condition="('$(RootNamespace)' != 'FinSecure.Platform.Common' and '$(RootNamespace)' != 'FinSecure.Platform.SourceGenerators')" />
   </ItemGroup>
 </Project>

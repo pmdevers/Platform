@@ -5,8 +5,4 @@
 		<Exec Command="npm run css:watch" Condition="'$(Configuration)'=='Debug'" />
 	</Target>
 
-	<ItemGroup>
-	  <Folder Include="wwwroot\images\" />
-	</ItemGroup>
-
 </Project>
