@@ -5,29 +5,45 @@ public interface IKafkaProcess
     void Stop();
 }
 
-public class KafkaProcess(
-    Consumer consumer,
-    string topic,
-    KafkaDelegate handler
-    ) : IKafkaProcess
+public class KafkaProcessOptions
+{
+    public KafkaConsumer Consumer { get; set; } = new NoConsumer();
+    public KafkaDelegate Delegate { get; set; } = (context) => Task.CompletedTask;
+}
+public class KafkaProcess : IKafkaProcess
 {
     private readonly CancellationTokenSource _cancellationToken = new();
+    private readonly KafkaConsumer _consumer;
+    private readonly KafkaDelegate _handler;
+
+    private KafkaProcess(
+        KafkaConsumer consumer,
+        KafkaDelegate handler
+    )
+    {
+        _consumer = consumer;
+        _handler = handler;
+    }
+
+    public static KafkaProcess Create(KafkaProcessOptions options)
+        => new(options.Consumer, options.Delegate);
+
     public void Start()
     {
         Task.Factory.StartNew(() =>
         {
-            consumer.Subscribe(topic);
+            _consumer.Subscribe();
 
             while (!_cancellationToken.IsCancellationRequested)
             {
-                var context = consumer.Consume(_cancellationToken.Token);
+                var context = _consumer.Consume(_cancellationToken.Token);
 
                 if (context is EmptyKafkaContext)
                 {
                     continue;
                 }
 
-                handler.Invoke(context);
+                _handler.Invoke(context);
 
             }
         });
@@ -35,6 +51,7 @@ public class KafkaProcess(
 
     public void Stop()
     {
+        _consumer.Close();
         _cancellationToken.Cancel();
         _cancellationToken.Dispose();
 
