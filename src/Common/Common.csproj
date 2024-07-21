@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<ItemGroup>
+		<PackageReference Include="Confluent.Kafka" />
 		<PackageReference Include="Featurize.AspNetCore" />
 		<PackageReference Include="Featurize.DomainModel" />
 		<PackageReference Include="Featurize.Repositories" />
@@ -17,5 +18,9 @@
 		<PackageReference Include="OpenTelemetry.Instrumentation.Runtime" />
 		<PackageReference Include="Swashbuckle.AspNetCore" />
 		<PackageReference Include="System.Linq.Async.Queryable" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Kafka\Builders\" />
 	</ItemGroup>
 </Project>
