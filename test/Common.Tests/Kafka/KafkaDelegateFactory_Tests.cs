@@ -1,8 +1,10 @@
 ﻿using Confluent.Kafka;
 using FinSecure.Platform.Common.Kafka;
+using FinSecure.Platform.Common.Kafka.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +26,7 @@ public class KafkaDelegateFactory_Tests
         var result = KafkaDelegateFactory.Create(Handle, new()
         {
             ServiceProvider = provider,
+            KafkaBuilder = new KafkaBuilder(provider)
         });
 
         var consumer = KafkaConsumer.Create(new()
@@ -41,10 +44,15 @@ public class KafkaDelegateFactory_Tests
             Delegate = result.Delegate,
         });
 
+        Assert.NotNull(process);    
+
     }
 
     private static Task Handle(KafkaContext context, string value)
     {
+        Debug.Write(context.Value);
+        Debug.Write(value);
+
         return Task.CompletedTask;
     }
 }

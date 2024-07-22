@@ -29,10 +29,23 @@ public sealed class KafkaDataSource(IServiceProvider serviceProvider)
     {
         foreach (var process in _entries)
         {
+            var builder = new KafkaBuilder(serviceProvider);
+
+            foreach (var convention in process.Conventions)
+            {
+                convention(builder);
+            }
+
             var result = KafkaDelegateFactory.Create(process.Delegate, new()
             {
                 ServiceProvider = serviceProvider,
+                KafkaBuilder = builder
             });
+
+            foreach (var convention in process.FinallyConventions)
+            {
+                convention(builder);
+            }
 
             var config = new ConsumerConfig
             {

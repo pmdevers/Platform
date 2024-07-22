@@ -1,16 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 
 namespace FinSecure.Platform.Common.Kafka;
-public class KafkaLogger
+public sealed class KafkaLogger(ILogger<KafkaLogger> logger)
 {
-    public KafkaLogger(ILogger<KafkaLogger> logger)
-    {
-        Logger = logger;
-        Instance = this;
-    }
+    public ILogger<KafkaLogger> Logger { get; } = logger;
 
-    public static KafkaLogger? Instance { get; private set; }
-
-    public ILogger<KafkaLogger> Logger { get; }
 
 }

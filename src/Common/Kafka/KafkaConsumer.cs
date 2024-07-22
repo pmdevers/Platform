@@ -2,6 +2,7 @@
 using FinSecure.Platform.Common.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
 using System.Threading;
 
 namespace FinSecure.Platform.Common.Kafka;
@@ -52,21 +53,7 @@ public class KafkaConsumer<TKey, TValue>(KafkaConsumerOptions options) : KafkaCo
 {
     private readonly IServiceProvider _serviceProvider = options.ServiceProvider;
     private readonly string _topicName = options.TopicName;
-    private readonly IConsumer<TKey, TValue> _consumer = 
-        new ConsumerBuilder<TKey, TValue>(options.Config)
-            .SetPartitionsRevokedHandler((c, partitions) =>
-            {
-                KafkaLogger.Instance?.Logger
-                .LogInformation("consumer {MemberId} had partitions {Partitions} revoked"
-                , c.MemberId, string.Join(",", partitions));
-            })
-            .SetPartitionsAssignedHandler((c, partitions) =>
-            {
-                KafkaLogger.Instance?.Logger
-                .LogInformation("consumer {MemberId} had partitions {Partitions} assigned"
-                , c.MemberId, string.Join(",", partitions));
-            })
-            .Build();
+    private readonly IConsumer<TKey, TValue> _consumer = CreateConsumer(options);
 
     public override KafkaContext Consume(CancellationToken cancellationToken)
     {
@@ -84,5 +71,11 @@ public class KafkaConsumer<TKey, TValue>(KafkaConsumerOptions options) : KafkaCo
     public override void Subscribe()
     {
         _consumer.Subscribe(_topicName);
+    }
+
+    private static IConsumer<TKey, TValue> CreateConsumer(KafkaConsumerOptions options)
+    {
+        return new ConsumerBuilder<TKey, TValue>(options.Config)
+            .Build();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace FinSecure.Platform.Common.Kafka.Builders;
 
-public sealed class KafkaConventionBuilder(
+public class KafkaConventionBuilder(
     ICollection<Action<IKafkaBuilder>> conventions,
     ICollection<Action<IKafkaBuilder>> finallyConventions) : IKafkaConventionBuilder
 {

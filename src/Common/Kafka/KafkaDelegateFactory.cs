@@ -1,5 +1,7 @@
 ﻿using Confluent.Kafka;
+using FinSecure.Platform.Common.Kafka.Builders;
 using FinSecure.Platform.Common.Kafka.Metadata;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -183,7 +185,7 @@ public sealed class KafkaDelegateResult
 
     public static KafkaDelegateResult Create(KafkaDelegate kafkaDelegate, KafkaDelegateFactoryContext context)
     {
-        return new(kafkaDelegate, context.KeyType, context.ValueType, []);
+        return new(kafkaDelegate, context.KeyType, context.ValueType, context.KafkaBuilder.MetaData);
     }
 
     public KafkaDelegate Delegate { get; }
@@ -194,13 +196,15 @@ public sealed class KafkaDelegateResult
 
 public class KafkaDelegateFactoryOptions
 {
-    public IServiceProvider? ServiceProvider { get; init; }
+    public required IServiceProvider? ServiceProvider { get; init; }
+    public required IKafkaBuilder KafkaBuilder { get; init; }
 }
 
 public class KafkaDelegateFactoryContext
 {
     public required IServiceProvider ServiceProvider { get; init; }
     public required IServiceProviderIsService? ServiceProviderIsService { get; init; }
+    public required IKafkaBuilder KafkaBuilder { get; init; }
     public Delegate? Handler { get; set; }
     public Dictionary<string, string> TrackedParameters { get; } = [];
     public List<ParameterInfo> Parameters { get; set; } = [];
@@ -218,11 +222,13 @@ public class KafkaDelegateFactoryContext
     public static KafkaDelegateFactoryContext Create(Delegate? handler, KafkaDelegateFactoryOptions? options)
     {
         var serviceProvider = options?.ServiceProvider ?? EmptyServiceProvider.Instance;
+        var kafkabuilder = options?.KafkaBuilder ?? new RfdKafkaBuilder(serviceProvider);
 
         return new KafkaDelegateFactoryContext()
         {
             ServiceProvider = serviceProvider,
             ServiceProviderIsService = serviceProvider.GetService<IServiceProviderIsService>(),
+            KafkaBuilder = kafkabuilder,
             Handler = handler,
         };
     }
@@ -232,4 +238,8 @@ internal sealed class EmptyServiceProvider : IServiceProvider
 {
     public static EmptyServiceProvider Instance { get; } = new EmptyServiceProvider();
     public object? GetService(Type serviceType) => null;
+}
+
+internal class RfdKafkaBuilder(IServiceProvider serviceProvider) : KafkaBuilder(serviceProvider)
+{
 }
