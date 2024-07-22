@@ -1,6 +1,7 @@
 ﻿using Confluent.Kafka;
 using FinSecure.Platform.Common.Kafka;
 using FinSecure.Platform.Common.Kafka.Builders;
+using FinSecure.Platform.Common.Kafka.Extension;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,15 @@ public class KafkaDelegateFactory_Tests
     public void Create()
     {
         var services = new ServiceCollection();
+
+        services.AddMinimalKafka(c =>
+            c.WithBootstrapServers("nas.home.lab:9092")
+             .WithGroupId("sdsd")
+             .WithOffsetReset(AutoOffsetReset.Earliest)
+            );
+
         var provider = services.BuildServiceProvider();
-        var config = new ConsumerConfig
-        {
-            BootstrapServers = "nas.home.lab:9092",
-            GroupId = "hhhh1", // Use type name for unique group ID
-            AutoOffsetReset = AutoOffsetReset.Earliest,
-        };
+        
         var result = KafkaDelegateFactory.Create(Handle, new()
         {
             ServiceProvider = provider,
@@ -35,7 +38,7 @@ public class KafkaDelegateFactory_Tests
             ValueType = result.ValueType,
             ServiceProvider = provider,
             TopicName = "test",
-            Config = config
+            Metadata = result.Metadata,
         });
 
         var process = KafkaProcess.Create(new()

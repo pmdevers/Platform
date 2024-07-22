@@ -1,6 +1,8 @@
-﻿namespace FinSecure.Platform.Common.Helpers;
+﻿
+namespace FinSecure.Platform.Common.Helpers;
 internal static class DebuggerHelpers
 {
-    public static string GetDebugText(string key, string value)
+    public static string GetDebugText(string key, object value)
         => $"'{key}' - {value}";
+
 }

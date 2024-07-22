@@ -47,20 +47,13 @@ public sealed class KafkaDataSource(IServiceProvider serviceProvider)
                 convention(builder);
             }
 
-            var config = new ConsumerConfig
-            {
-                BootstrapServers = "nas.home.lab:9092",
-                GroupId = Guid.NewGuid().ToString(), // Use type name for unique group ID
-                AutoOffsetReset = AutoOffsetReset.Earliest,
-            };
-
             var consumer = KafkaConsumer.Create(new()
             {
                 KeyType = result.KeyType,
                 ValueType = result.ValueType,
                 ServiceProvider = serviceProvider,
                 TopicName = process.TopicName,
-                Config = config,
+                Metadata = result.Metadata,
             });
 
             yield return KafkaProcess.Create(new()

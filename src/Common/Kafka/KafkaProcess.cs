@@ -1,4 +1,6 @@
-﻿namespace FinSecure.Platform.Common.Kafka;
+﻿using Microsoft.Extensions.Logging;
+
+namespace FinSecure.Platform.Common.Kafka;
 public interface IKafkaProcess
 {
     void Start();
@@ -40,12 +42,15 @@ public class KafkaProcess : IKafkaProcess
 
                 if (context is EmptyKafkaContext)
                 {
+
+                    _consumer.Logger.LogError("Empty Context!");
                     continue;
                 }
 
                 _handler.Invoke(context);
 
             }
+            _consumer.Logger.LogInformation("Dropping out of consume loop");
         });
     }
 
