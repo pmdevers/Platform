@@ -28,6 +28,12 @@ public static class Create
         var project = Project.Create(request.ProjectId, subscriptionId, request.Name);
         await services.Manager.SaveAsync(project);
 
+        await services.Producer.ProduceAsync("project", new()
+        {
+            Key = request.ProjectId,
+            Value = project,
+        });
+
         return TypedResults.Ok();
     }
 

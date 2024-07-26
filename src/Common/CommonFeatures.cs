@@ -1,4 +1,5 @@
 ﻿using FinSecure.Platform.Common.HealthChecks;
+using FinSecure.Platform.Common.Kafka;
 using FinSecure.Platform.Common.OpenApi;
 using FinSecure.Platform.Common.Serialization;
 using FinSecure.Platform.Common.Storage;
@@ -15,7 +16,8 @@ public static class CommonFeatures
             .AddOpenTelemetry()
             .AddSerializaion()
             .AddOpenApi()
-            .AddStorage();
+            .AddStorage()
+            .AddKafka();
         return features;
     }
 
@@ -46,6 +48,12 @@ public static class CommonFeatures
     public static IFeatureCollection AddOpenTelemetry(this IFeatureCollection features)
     {
         features.Add<OpenTelemetryFeature>();
+        return features;
+    }
+
+    public static IFeatureCollection AddKafka(this IFeatureCollection features)
+    {
+        features.Add<KafkaFeature>();
         return features;
     }
 }
