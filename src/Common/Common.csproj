@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<ItemGroup>
-		<PackageReference Include="Confluent.Kafka" />
 		<PackageReference Include="Featurize.AspNetCore" />
 		<PackageReference Include="Featurize.DomainModel" />
 		<PackageReference Include="Featurize.Repositories" />
@@ -10,6 +9,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
 		<PackageReference Include="Microsoft.Extensions.Http.Resilience" />
 		<PackageReference Include="Microsoft.Extensions.ServiceDiscovery" />
+		<PackageReference Include="MinimalKafka" />
 		<PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
 		<PackageReference Include="OpenTelemetry.Extensions.Hosting" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
@@ -18,5 +18,6 @@
 		<PackageReference Include="OpenTelemetry.Instrumentation.Runtime" />
 		<PackageReference Include="Swashbuckle.AspNetCore" />
 		<PackageReference Include="System.Linq.Async.Queryable" />
+		<PackageReference Include="System.Text.Json" />
 	</ItemGroup>
 </Project>

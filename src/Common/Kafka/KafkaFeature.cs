@@ -1,7 +1,10 @@
 ﻿using Confluent.Kafka;
-using FinSecure.Platform.Common.Kafka.Extension;
-using FinSecure.Platform.Common.Logging;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using MinimalKafka;
+using MinimalKafka.Builders;
+using MinimalKafka.Extension;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FinSecure.Platform.Common.Kafka;
 public class KafkaFeature : IServiceCollectionFeature
@@ -14,5 +17,22 @@ public class KafkaFeature : IServiceCollectionFeature
             config.WithGroupId(Guid.NewGuid().ToString());
             config.WithOffsetReset(AutoOffsetReset.Earliest);
         });
+    }
+}
+
+public static class MinimalKafkaExtensions
+{
+    public static IKafkaConventionBuilder MapTopic(this IEndpointRouteBuilder builder, 
+        [StringSyntax("route")] string topic, KafkaDelegate handler)
+    {
+        var kafkaBuilder = builder.ServiceProvider.GetRequiredService<IKafkaBuilder>();
+        return kafkaBuilder.MapTopic(topic, handler);
+    }
+
+    public static IKafkaConventionBuilder MapTopic(this IEndpointRouteBuilder builder,
+        [StringSyntax("route")] string topic, Delegate handler)
+    {
+        var kafkaBuilder = builder.ServiceProvider.GetRequiredService<IKafkaBuilder>();
+        return kafkaBuilder.MapTopic(topic, handler);
     }
 }
