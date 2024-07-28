@@ -1,8 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Features()
+builder
     .AddCommonFeatures()
-    .AddRepositories()
     .DiscoverFeatures();
 
 var app = builder.BuildWithFeatures();

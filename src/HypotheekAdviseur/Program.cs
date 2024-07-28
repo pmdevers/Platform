@@ -1,6 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Features()
+builder
     .AddCommonFeatures()
     .DiscoverFeatures();
 

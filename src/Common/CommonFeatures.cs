@@ -4,32 +4,34 @@ using FinSecure.Platform.Common.OpenApi;
 using FinSecure.Platform.Common.Serialization;
 using FinSecure.Platform.Common.Storage;
 using FinSecure.Platform.Common.Telemetry;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 
 namespace FinSecure.Platform.Common;
 
 public static class CommonFeatures
 {
-    public static IFeatureCollection AddCommonFeatures(this IFeatureCollection features)
+    public static IFeatureCollection AddCommonFeatures(this WebApplicationBuilder builder)
+    {
+
+        return builder.Features()
+            .AddCommonFeatures(builder.Configuration);
+    }
+
+    public static IFeatureCollection AddCommonFeatures(this IFeatureCollection features, IConfiguration configuration)
     {
         features
             .AddHealthChecks()
             .AddOpenTelemetry()
             .AddSerializaion()
             .AddOpenApi()
-            .AddStorage()
-            .AddKafka();
+            .AddKafka(configuration);
         return features;
     }
 
     public static IFeatureCollection AddOpenApi(this IFeatureCollection features)
     {
         features.Add<OpenApiFeature>();
-        return features;
-    }
-
-    public static IFeatureCollection AddStorage(this IFeatureCollection features)
-    {
-        features.Add<StorageFeature>();
         return features;
     }
 
@@ -51,9 +53,9 @@ public static class CommonFeatures
         return features;
     }
 
-    public static IFeatureCollection AddKafka(this IFeatureCollection features)
+    public static IFeatureCollection AddKafka(this IFeatureCollection features, IConfiguration config)
     {
-        features.Add<KafkaFeature>();
+        features.AddWithOptions<KafkaFeature, KafkaFeatureOptions>(x => config.Bind("kafka", x));
         return features;
     }
 }

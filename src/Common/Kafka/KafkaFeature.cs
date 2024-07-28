@@ -5,11 +5,26 @@ using MinimalKafka;
 using MinimalKafka.Extension;
 
 namespace FinSecure.Platform.Common.Kafka;
-internal class KafkaFeature : IWebApplicationFeature
+
+public class KafkaFeatureOptions
 {
-    public void Configure(IServiceCollection services)
+    public string BootstrapServers { get; set; } = string.Empty;
+}
+
+public class KafkaFeature(KafkaFeatureOptions options)
+    : IWebApplicationFeature, 
+      IFeatureWithOptions<KafkaFeature, KafkaFeatureOptions>
+{
+        public KafkaFeatureOptions Options { get; } = options;
+
+        public static KafkaFeature Create(KafkaFeatureOptions options)
+            => new(options);
+
+        public void Configure(IServiceCollection services)
     {
-        services.AddMinimalKafka(x => x.WithBootstrapServers("nas.home.lab:9092"));
+        services.AddMinimalKafka(x => {
+            x.WithBootstrapServers(Options.BootstrapServers);
+        });
     }
 
     public void Use(WebApplication app)

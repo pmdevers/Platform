@@ -4,8 +4,7 @@ using FinSecure.Platform.Core.Domain.Projects;
 
 namespace FinSecure.Platform.Core.Features.Projects;
 
-public class ProjectsServices(AggregateManager<Project, ProjectId> manager, IProducer<ProjectId, Project> producer)
+public class ProjectsServices(IAggregateManager<ProjectAggregate, ProjectId> manager)
 {
-    public AggregateManager<Project, ProjectId> Manager { get; } = manager;
-    public IProducer<ProjectId, Project> Producer { get; } = producer;
+    public IAggregateManager<ProjectAggregate, ProjectId> Manager { get; } = manager;
 }

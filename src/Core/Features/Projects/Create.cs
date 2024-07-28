@@ -25,14 +25,8 @@ public static class Create
             return TypedResults.BadRequest();
         }
 
-        var project = Project.Create(request.ProjectId, subscriptionId, request.Name);
+        var project = ProjectAggregate.Create(request.ProjectId, subscriptionId, request.Name);
         await services.Manager.SaveAsync(project);
-
-        await services.Producer.ProduceAsync("project", new()
-        {
-            Key = request.ProjectId,
-            Value = project,
-        });
 
         return TypedResults.Ok();
     }

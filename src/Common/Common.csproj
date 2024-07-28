@@ -2,9 +2,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Featurize.AspNetCore" />
-		<PackageReference Include="Featurize.DomainModel" />
-		<PackageReference Include="Featurize.Repositories" />
-		<PackageReference Include="Featurize.Repositories.InMemory" />
 		<PackageReference Include="Featurize.ValueObjects" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
 		<PackageReference Include="Microsoft.Extensions.Http.Resilience" />
