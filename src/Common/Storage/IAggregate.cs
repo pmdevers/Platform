@@ -9,4 +9,5 @@ public interface IAggregate<out TState>
     bool IsValid { get; }
     void Apply(Event e);
     Task LoadAsync(Guid id);
+    Task SaveAsync();
 }

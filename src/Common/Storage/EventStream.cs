@@ -50,4 +50,7 @@ public class EventStream : IEventStream
 
     public Event[] GetUncommittedEvents()
         => [.. _uncommitted];
+
+    public IEventStream Commit()
+        => Create(Id, [.. _events, .. _uncommitted]);
 }

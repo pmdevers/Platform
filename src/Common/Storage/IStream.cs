@@ -9,6 +9,7 @@ public interface IEventStream : IReadOnlyCollection<Event>
     DateTimeOffset? LastModifiedOn { get; }
     void Append(Event e);
     Event[] GetUncommittedEvents();
+    IEventStream Commit();
 }
 
 public abstract record Event
