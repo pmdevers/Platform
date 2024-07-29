@@ -17,9 +17,10 @@ public class AggregateBuilder<TState> : IAggregateBuilder<TState>
     private readonly List<ValidationRule<TState>> _rules = [];
     private readonly CreateStateDelegate<TState> _creator;
 
-    private ValidateStateDelegate<TState>? _validator = null;
-    private ApplyEventDelegate<TState>? _applier = null;
-    private LoadEventStreamDelegate? _loader = null;
+    private Func<IServiceProvider, ValidateStateDelegate<TState>>? _validator;
+    private Func<IServiceProvider, ApplyEventDelegate<TState>>? _applier = null;
+    private Func<IServiceProvider, LoadEventStreamDelegate>? _loader = null;
+    private Func<IServiceProvider, SaveAggregateDelegate<TState>>? _saver = null;
 
     internal AggregateBuilder(CreateStateDelegate<TState> creator)
     {
@@ -27,26 +28,33 @@ public class AggregateBuilder<TState> : IAggregateBuilder<TState>
     }
     public IAggregateBuilder<TState> WithEvents(Event[] events)
     {
-        _loader = AggregateBuilderDefaults.DefaultLoader(events);
+        _loader = (s) => AggregateBuilderDefaults.DefaultLoader(events);
         return this;
     }
 
-    public IAggregate<TState> Build()
+    public IAggregate<TState> Build(IServiceProvider serviceProvider)
     {
-        var applier = _applier ?? AggregateBuilderDefaults.DefaultApplier(_events);
-        var validator = _validator ?? AggregateBuilderDefaults.DefaultValidator(_rules);
-        var loader = _loader ?? AggregateBuilderDefaults.DefaultLoader();
+        var applier = _applier?.Invoke(serviceProvider) ?? AggregateBuilderDefaults.DefaultApplier(_events);
+        var validator = _validator?.Invoke(serviceProvider) ?? AggregateBuilderDefaults.DefaultValidator(_rules);
+        var loader = _loader?.Invoke(serviceProvider) ?? AggregateBuilderDefaults.DefaultLoader();
+        var saver = _saver?.Invoke(serviceProvider) ?? AggregateBuilderDefaults.DefaultSaver<TState>();
 
-        return new Aggregate<TState>(_creator, applier, validator, loader);
+        return new Aggregate<TState>(_creator, applier, validator, loader, saver);
     }
 
-    public IAggregateBuilder<TState> WithLoader(LoadEventStreamDelegate loader)
+    public IAggregateBuilder<TState> WithSaver(Func<IServiceProvider, SaveAggregateDelegate<TState>> saver)
+    {
+        _saver = saver; 
+        return this;
+    }
+
+    public IAggregateBuilder<TState> WithLoader(Func<IServiceProvider, LoadEventStreamDelegate> loader)
     {
         _loader = loader;
         return this;
     }
 
-    public IAggregateBuilder<TState> WithValidator(ValidateStateDelegate<TState> validator)
+    public IAggregateBuilder<TState> WithValidator(Func<IServiceProvider, ValidateStateDelegate<TState>> validator)
     {
         _validator = validator;
         return this;
@@ -58,7 +66,7 @@ public class AggregateBuilder<TState> : IAggregateBuilder<TState>
          return this;
     }
 
-    public IAggregateBuilder<TState> WithApplier(ApplyEventDelegate<TState> applier)
+    public IAggregateBuilder<TState> WithApplier(Func<IServiceProvider, ApplyEventDelegate<TState>> applier)
     {
         _applier = applier;
         return this;

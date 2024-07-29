@@ -15,6 +15,9 @@ internal static class AggregateBuilderDefaults
                          .ToArray();
 
     public static LoadEventStreamDelegate DefaultLoader(Event[]? events = null) 
-        => (Guid streamId) => Task.FromResult(EventStream.Create(streamId, events));
+        => (Guid streamId) => Task.FromResult(events is not null ? EventStream.Create(streamId, events) : null);
+
+    public static SaveAggregateDelegate<TState> DefaultSaver<TState>()
+        => (IAggregate<TState> aggregate) => Task.FromResult(EventStream.Create(aggregate.Stream.Id, aggregate.Stream.GetUncommittedEvents()));
 }
 public record ValidationRule<TState>(Func<TState, bool> Rule, string Message);

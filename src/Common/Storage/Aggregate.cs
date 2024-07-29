@@ -5,28 +5,32 @@ namespace FinSecure.Platform.Common.Storage;
 
 public delegate TState CreateStateDelegate<out TState>();
 public delegate TState ApplyEventDelegate<TState>(TState state, Event e);
-public delegate Task<IEventStream> LoadEventStreamDelegate(Guid id);
+public delegate Task<IEventStream?> LoadEventStreamDelegate(Guid id);
+public delegate Task<IEventStream> SaveAggregateDelegate<in TState>(IAggregate<TState> aggregate);
 
 public delegate ValidationMessage[] ValidateStateDelegate<in TState>(TState state);
 
 public class Aggregate<TState> 
     : IAggregate<TState>
 {
+    private readonly CreateStateDelegate<TState> _creator;
     private readonly ApplyEventDelegate<TState> _applier;
     private readonly ValidateStateDelegate<TState> _validator;
     private readonly LoadEventStreamDelegate _loader;
-    private readonly CreateStateDelegate<TState> _creator;
+    private readonly SaveAggregateDelegate<TState> _saver;
 
     internal Aggregate(
         CreateStateDelegate<TState> creator,
         ApplyEventDelegate<TState> applier,
         ValidateStateDelegate<TState> validator,
-        LoadEventStreamDelegate loader)
+        LoadEventStreamDelegate loader,
+        SaveAggregateDelegate<TState> saver)
     {
         _creator = creator;
         _applier = applier;
         _validator = validator;
         _loader = loader;
+        _saver = saver;
 
         _stream = EventStream.Create();
         State = _creator();
@@ -45,7 +49,13 @@ public class Aggregate<TState>
     }
     public async Task LoadAsync(Guid id)
     {
-        _stream = await _loader(id);
+        _stream = await _loader(id) ?? EventStream.Create(id);
+        UpdateState();
+    }
+
+    public async Task SaveAsync()
+    {
+        _stream = await _saver(this);
         UpdateState();
     }
 
