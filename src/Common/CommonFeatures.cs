@@ -6,6 +6,7 @@ using FinSecure.Platform.Common.Storage;
 using FinSecure.Platform.Common.Telemetry;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using StreamWave;
 
 namespace FinSecure.Platform.Common;
 
@@ -25,7 +26,9 @@ public static class CommonFeatures
             .AddOpenTelemetry()
             .AddSerializaion()
             .AddOpenApi()
-            .AddKafka(configuration);
+            .AddKafka(configuration)
+            .AddStorage();
+        
         return features;
     }
 
@@ -56,6 +59,12 @@ public static class CommonFeatures
     public static IFeatureCollection AddKafka(this IFeatureCollection features, IConfiguration config)
     {
         features.AddWithOptions<KafkaFeature, KafkaFeatureOptions>(x => config.Bind("kafka", x));
+        return features;
+    }
+
+    public static IFeatureCollection AddStorage(this IFeatureCollection features)
+    {
+        features.Add<StorageFeature>();
         return features;
     }
 }

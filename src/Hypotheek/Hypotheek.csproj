@@ -9,6 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\Leningen\**" />
+    <Compile Remove="Features\Leningen\**" />
+    <Content Remove="Domain\Leningen\**" />
+    <Content Remove="Features\Leningen\**" />
+    <EmbeddedResource Remove="Domain\Leningen\**" />
+    <EmbeddedResource Remove="Features\Leningen\**" />
+    <None Remove="Domain\Leningen\**" />
+    <None Remove="Features\Leningen\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
   </ItemGroup>
 

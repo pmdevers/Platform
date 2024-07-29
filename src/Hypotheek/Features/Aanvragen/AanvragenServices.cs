@@ -1,16 +1,17 @@
 ﻿using FinSecure.Platform.Common.Storage;
 using FinSecure.Platform.Hypotheek.Domain.Aanvragen;
 using FinSecure.Platform.Hypotheek.Domain.Aanvragers;
+using StreamWave;
 
 namespace FinSecure.Platform.Hypotheek.Features.Aanvragen;
 
 public class AanvragenServices(
-    IAggregateManager<Aanvraag, AanvraagId> manager,
-    IAggregateManager<NatuurlijkPersoon, AanvragerId> natuurlijkPersoonManager,
-    IAggregateManager<Rechtspersoon, AanvragerId> rechtspersoonManager
+    IAggregate<Aanvraag, AanvraagId> manager,
+    IAggregate<NatuurlijkPersoon, AanvragerId> natuurlijkPersoonManager,
+    IAggregate<Rechtspersoon, AanvragerId> rechtspersoonManager
     )
 {
-    public IAggregateManager<Aanvraag, AanvraagId> Manager { get; } = manager;
-    public IAggregateManager<NatuurlijkPersoon, AanvragerId> NatuurlijkPersoonManager { get; } = natuurlijkPersoonManager;
-    public IAggregateManager<Rechtspersoon, AanvragerId> RechtspersoonManager { get; } = rechtspersoonManager;
+    public IAggregate<Aanvraag, AanvraagId> Manager { get; } = manager;
+    public IAggregate<NatuurlijkPersoon, AanvragerId> NatuurlijkPersoonManager { get; } = natuurlijkPersoonManager;
+    public IAggregate<Rechtspersoon, AanvragerId> RechtspersoonManager { get; } = rechtspersoonManager;
 }

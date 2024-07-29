@@ -23,13 +23,13 @@ public static class Get
             return TypedResults.BadRequest();
         }
 
-        var aanvraag = await services.Manager.LoadAsync(aanvraagId);
+        await services.Manager.LoadAsync(aanvraagId);
 
-        if(aanvraag is null)
+        if(services.Manager.Stream.Version == 0)
         {
             return TypedResults.NotFound();
         }
 
-        return TypedResults.Ok(aanvraag);
+        return TypedResults.Ok(services.Manager.State);
     }
 }
