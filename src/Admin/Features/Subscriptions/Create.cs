@@ -14,12 +14,11 @@ public static class Create
     }
 
     private static async Task<Results<Ok<SubscriptionId>, BadRequest>> HandleAsync(
-        [FromServices] AggregateManager<Subscription, SubscriptionId> manager,
         [FromBody] CreateSubscriptionRequest request
         )
     {
         var sub = Subscription.Create(request.Name);
-        await manager.SaveAsync(sub);
+        await Task.CompletedTask;
         return TypedResults.Ok(sub.Id);
     }
 

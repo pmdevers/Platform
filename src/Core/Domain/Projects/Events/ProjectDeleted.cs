@@ -1,3 +1,5 @@
-﻿namespace FinSecure.Platform.Core.Domain.Projects.Events;
+﻿using FinSecure.Platform.Common.Storage;
 
-public record ProjectDeleted(ProjectId ProjectId, bool Deleted) : EventRecord;
+namespace FinSecure.Platform.Core.Domain.Projects.Events;
+
+public record ProjectDeleted(ProjectId ProjectId, bool Deleted) : Event;

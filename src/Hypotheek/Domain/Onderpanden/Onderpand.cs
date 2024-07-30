@@ -1,27 +1,14 @@
 ﻿
 using FinSecure.Platform.Hypotheek.Domain.Onderpanden.Events;
+using StreamWave;
 
 namespace FinSecure.Platform.Hypotheek.Domain.Onderpanden;
 
-public class Onderpand : AggregateRoot<OnderpandId>
+public class Onderpand : IAggregateState<OnderpandId>
 {
-    public OnderpandType Type { get; private set; } = OnderpandType.Onbekend;
-
-    private Onderpand(OnderpandId id) : base(id)
-    {
-    }
-
-    public static Onderpand Create(OnderpandId onderpandId)
-    {
-        var onderpand = new Onderpand(onderpandId);
-        onderpand.RecordEvent(new OnderpandCreated(onderpandId, OnderpandType.Onbekend));
-        return onderpand;
-    }
-
-    internal void Apply(OnderpandCreated e)
-    {
-        Type = e.OnderpandType;
-    }
+    public OnderpandId Id { get; set; } = OnderpandId.Next();
+    public OnderpandType Type { get; set; } = OnderpandType.Onbekend;
+    
 }
 
 public abstract record OnderpandType

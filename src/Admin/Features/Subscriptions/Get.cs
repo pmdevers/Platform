@@ -12,18 +12,8 @@ public static class Get
         builder.MapGet("/", HandleAsync);
     }
 
-    private static async Task<Results<Ok<Subscription>, NotFound>> HandleAsync(
-        [FromHeader(Name = "subscriptionId")] SubscriptionId subscriptionId,
-        [FromServices] AggregateManager<Subscription, SubscriptionId> manager
-        )
+    private static Ok HandleAsync()
     {
-        var sub = await manager.LoadAsync(subscriptionId);
-
-        if (sub is null)
-        {
-            return TypedResults.NotFound();
-        }
-
-        return TypedResults.Ok(sub);
+       return TypedResults.Ok();
     }
 }

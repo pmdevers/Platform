@@ -1,3 +1,5 @@
-﻿namespace FinSecure.Platform.Hypotheek.Domain.Aanvragers.Events;
+﻿using StreamWave;
 
-public record NatuurlijkPersoonCreated(AanvragerId AanvragerId) : EventRecord;
+namespace FinSecure.Platform.Hypotheek.Domain.Aanvragers.Events;
+
+public record NatuurlijkPersoonCreated(AanvragerId AanvragerId) : Event;

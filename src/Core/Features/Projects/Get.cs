@@ -29,12 +29,12 @@ public static class Get
             return TypedResults.NotFound();
         }
 
-        if(project.SubscriptionId != subscriptionId)
+        if(project.State.SubscriptionId != subscriptionId)
         {
             return TypedResults.NotFound();
         }
 
-        return TypedResults.Ok(new GetProjectResponse(project.Id, project.Name, project.LastModifiedOn));
+        return TypedResults.Ok(new GetProjectResponse(project.Id, project.State.Name, project.LastModifiedOn));
     }
 
     public record GetProjectResponse(ProjectId Id, string Name, DateTimeOffset? LastModifiedOn);

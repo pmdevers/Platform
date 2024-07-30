@@ -1,9 +1,11 @@
-﻿using FinSecure.Platform.Common.Storage;
+﻿using Confluent.Kafka;
+
 using FinSecure.Platform.Core.Domain.Projects;
+using StreamWave;
 
 namespace FinSecure.Platform.Core.Features.Projects;
 
-public class ProjectsServices(AggregateManager<Project, ProjectId> manager)
+public class ProjectsServices(IAggregate<ProjectAggregate, ProjectId> manager)
 {
-    public AggregateManager<Project, ProjectId> Manager { get; } = manager;
+    public IAggregate<ProjectAggregate, ProjectId> Manager { get; } = manager;
 }

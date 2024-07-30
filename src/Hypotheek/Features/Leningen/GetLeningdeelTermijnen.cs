@@ -1,6 +1,5 @@
 ﻿
 using Featurize.ValueObjects;
-using FinSecure.Platform.Hypotheek.Domain.Leningen;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 

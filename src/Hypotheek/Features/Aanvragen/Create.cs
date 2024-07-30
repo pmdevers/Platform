@@ -22,9 +22,9 @@ public static class Create
             return TypedResults.BadRequest();
         }
 
-        var aanvraag = Aanvraag.Create(request.AanvraagId);
+        await services.Manager.LoadAsync(request.AanvraagId);
 
-        await services.Manager.SaveAsync(aanvraag);
+        await services.Manager.SaveAsync();
 
         return TypedResults.Ok();
     }

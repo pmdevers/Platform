@@ -22,9 +22,9 @@ public static class CreateRechtspersoon
             return TypedResults.BadRequest();
         }
 
-        var persoon = Rechtspersoon.Create(request.AanvragerId);
+        await services.Rechtspersoon.LoadAsync(request.AanvragerId);
 
-        await services.RechtspersoonManager.SaveAsync(persoon);
+        await services.Rechtspersoon.SaveAsync();
 
         return TypedResults.Ok();
     }
@@ -50,9 +50,8 @@ public static class CreateNatuurlijkPersoon
             return TypedResults.BadRequest();
         }
 
-        var persoon = NatuurlijkPersoon.Create(request.AanvragerId);
-
-        await services.NatuurlijkPersoonManager.SaveAsync(persoon);
+        await services.NatuurlijkPersoon.LoadAsync(request.AanvragerId);
+        await services.NatuurlijkPersoon.SaveAsync();
 
         return TypedResults.Ok();
     }

@@ -3,7 +3,7 @@ using FinSecure.Platform.Hypotheek.Domain.Leningen;
 
 namespace FinSecure.Platform.Hypotheek.Features.Leningen;
 
-public class LeningenServices(AggregateManager<Lening, LeningId> manager)
+public class LeningenServices(IAggregateManager<Lening, LeningId> manager)
 {
-    public AggregateManager<Lening, LeningId> Manager { get; } = manager;
+    public IAggregateManager<Lening, LeningId> Manager { get; } = manager;
 }

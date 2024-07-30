@@ -1,32 +1,23 @@
-﻿using Featurize.Repositories;
-using Featurize.Repositories.InMemory;
+﻿using Featurize.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using StreamWave;
 
 namespace FinSecure.Platform.Common.Storage;
-
-public class StorageFeature : IServiceCollectionFeature, IConfigureOptions<RepositoryProviderOptions>
+internal class StorageFeature : IWebApplicationFeature
 {
     public void Configure(IServiceCollection services)
     {
-        services.AddScoped(typeof(AggregateManager<,>));
+        services.AddAggregate<TestAggregate, Guid>(() => new());
     }
 
-    public void Configure(RepositoryProviderOptions options)
+    public void Use(WebApplication app)
     {
-        options.AddInMemory();
     }
 }
 
-public static class RepositoryProviderOptionsExtensions
+public class TestAggregate : IAggregateState<Guid>
 {
-    public static RepositoryProviderOptions AddAggregate<TId>(this RepositoryProviderOptions options)
-    {
-        options.AddRepository<PersistendEvent<TId>, Guid>(o =>
-        {
-            o.Provider(InMemoryRepositoryProvider.DefaultName);
-        });
-
-        return options;
-    }
-
+    public Guid Id { get; set; } = Guid.Empty;
 }
+
